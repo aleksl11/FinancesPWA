@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function SummaryBarChart({ accountData = { incomeData: [], expenseData: [] } }: { accountData: any }) {
-    console.log(accountData)
-    console.log(accountData.incomeData)
 
     const currentYear = new Date().getFullYear()
     const [year, setYear] = useState(currentYear);

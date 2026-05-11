@@ -1,6 +1,7 @@
 import { db } from '../../db/db.ts'
 import { useLiveQuery } from 'dexie-react-hooks'
 import SummaryBarChart from './charts/SummaryBarChart.tsx';
+import SummaryPieChart from './charts/SummaryPieChart.tsx';
 
 function Summary() {
     const accounts = useLiveQuery(() => db.accounts.toArray());
@@ -31,7 +32,10 @@ function Summary() {
             Total balance: {totalBalance}PLN
           </div>
         </header>
-        <SummaryBarChart accountData={accountData}></SummaryBarChart>
+        <div className="space-y-6 px-1 sm:px-4">
+          <SummaryBarChart accountData={accountData}></SummaryBarChart>
+          <SummaryPieChart expenseData={expenses}></SummaryPieChart>
+        </div>
         </div>
     )
 }
