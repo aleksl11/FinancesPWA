@@ -22,7 +22,7 @@ function Accounts() {
     };
 
     const formatCurrency = (val: number) => {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PLN' }).format(val);
     };
 
     const totalBalance = accounts?.reduce((sum, a) => sum + a.balance, 0) || 0;

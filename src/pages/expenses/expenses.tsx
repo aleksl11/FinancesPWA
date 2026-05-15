@@ -35,13 +35,21 @@ function Expenses() {
             description: "" // Optional field
         });
 
+        const account = await db.accounts.get(Number(accountId));
+
+        if (account) {
+            await db.accounts.update(Number(accountId), {
+                balance: account.balance - Number(amount)
+            });
+        }
+
         // Reset form
         setTitle(''); setAmount(''); setAccountId(''); setCategoryId('');
         setShowForm(false);
     };
 
     const formatCurrency = (val: number) => {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PLN' }).format(val);
     };
 
     return (
@@ -175,6 +183,14 @@ function Expenses() {
                         <div className="flex gap-2">
                             <Button variant="secondary" className="flex-1" onClick={() => setExpenseToDelete(null)}>Cancel</Button>
                             <Button variant="destructive" className="flex-1" onClick={async () => {
+                                const account = await db.accounts.get(expenseToDelete.accountId);
+
+                                if (account) {
+                                    await db.accounts.update(expenseToDelete.accountId, {
+                                        balance: account.balance + expenseToDelete.amount
+                                    });
+                                }
+
                                 await db.expenses.delete(expenseToDelete.id);
                                 setExpenseToDelete(null);
                             }}>Delete</Button>

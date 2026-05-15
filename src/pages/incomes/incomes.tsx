@@ -33,13 +33,21 @@ function Incomes() {
             description: ""
         });
 
+        const account = await db.accounts.get(Number(accountId));
+
+        if (account) {
+            await db.accounts.update(Number(accountId), {
+                balance: account.balance + Number(amount)
+            });
+        }
+
         // Reset & Close
         setTitle(''); setAmount(''); setAccountId('');
         setShowForm(false);
     };
 
     const formatCurrency = (val: number) => {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'PLN' }).format(val);
     };
 
     return (
@@ -160,7 +168,16 @@ function Incomes() {
                         <div className="flex gap-2">
                             <Button variant="secondary" className="flex-1" onClick={() => setIncomeToDelete(null)}>Cancel</Button>
                             <Button variant="destructive" className="flex-1" onClick={async () => {
+                                const account = await db.accounts.get(incomeToDelete.accountId);
+
+                                if (account) {
+                                    await db.accounts.update(incomeToDelete.accountId, {
+                                        balance: account.balance - incomeToDelete.amount
+                                    });
+                                }
+
                                 await db.incomes.delete(incomeToDelete.id);
+
                                 setIncomeToDelete(null);
                             }}>Delete</Button>
                         </div>

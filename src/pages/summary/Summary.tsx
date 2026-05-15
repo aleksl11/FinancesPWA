@@ -98,7 +98,7 @@ function Summary() {
 				<div className="flex items-center gap-3 flex-row">
 					<h1 className="text-2xl font-semibold">My Finances</h1>
 					<div className="bg-[#004109] text-white px-5 py-2.5 rounded-lg shadow-sm">
-						Total balance: {totalBalance}PLN
+						Total balance: {totalBalance} PLN
 					</div>
 				</div>
             </header>
